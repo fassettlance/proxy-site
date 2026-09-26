@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultraviolet Proxy Launcher</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+          Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        text-align: center;
+        max-width: 500px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      p {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 14px 40px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .info {
+        background: #f0f4ff;
+        border-left: 4px solid #667eea;
+        padding: 15px;
+        margin-top: 30px;
+        text-align: left;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #555;
+      }
+
+      .info strong {
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🌐 Ultraviolet Proxy</h1>
+      <p>Click the button below to open the TitaniumNetwork Ultraviolet documentation in a new tab with iframe injection.</p>
+
+      <button onclick="openProxyTab()">Open Ultraviolet</button>
+
+      <div class="info">
+        <strong>ℹ️ Note:</strong> A new tab will open. Make sure pop-ups are enabled in your browser settings. The page will load inside an iframe on an about:blank tab.
+      </div>
+    </div>
+
+    <script>
+      function openProxyTab() {
+        const targetUrl = 'https://docs.titaniumnetwork.org/proxies/ultraviolet';
+
+        const popup = window.open('about:blank', '_blank');
+
+        if (!popup) {
+          alert(
+            'Popup blocked! Please allow pop-ups for this site and try again.'
+          );
+          return;
+        }
+
+        const doc = popup.document;
+        const html = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Ultraviolet Proxy</title>
+              <style>
+                html, body {
+                  margin: 0;
+                  width: 100%;
+                  height: 100%;
+                  overflow: hidden;
+                  background: #000;
+                }
+
+                iframe {
+                  width: 100vw;
+                  height: 100vh;
+                  border: 0;
+                  display: block;
+                  background: white;
+                }
+              </style>
+            </head>
+            <body>
+              <iframe
+                src="${targetUrl}"
+                title="Ultraviolet Proxy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"
+              ></iframe>
+            </body>
+          </html>
+        `;
+
+        doc.open();
+        doc.write(html);
+        doc.close();
+      }
+    </script>
+  </body>
+</html>
